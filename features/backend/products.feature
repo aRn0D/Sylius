@@ -40,7 +40,6 @@ Feature: Products
             | New      |
 
     Scenario: Seeing index of all products
-    Scenario: Seeing index of all products
         Given I am on the dashboard page
          When I follow "Products"
          Then I should be on the product index page
@@ -250,6 +249,16 @@ Feature: Products
          Then I should be on the page of product "Black T-Shirt"
           And I should see "Product has been successfully updated."
           And "Featured" should appear on the page
+
+    @javascript
+    Scenario: Selecting more than one taxon from taxonomy
+        Given I am editing product "Black T-Shirt"
+          And go to "Categorization" tab
+         When I remove all the properties
+          And I press "Save changes"
+         Then I should be on the page of product "Black T-Shirt"
+          And I should see "Product has been successfully updated."
+          And I should see "This product has no properties defined"
 
     Scenario: Deleting product
         Given I am on the page of product "Mug"
