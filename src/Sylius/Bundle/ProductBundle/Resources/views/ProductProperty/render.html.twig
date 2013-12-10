@@ -1,0 +1,7 @@
+<div class="collection-box{% if form|length == 1%} unique-field{% endif %}">
+    <a href="#" data-form-collection="delete">
+        <i class="glyphicon glyphicon-remove collection-button-remove"></i>
+    </a>
+
+    {{ form_rest(form) }}
+</div>

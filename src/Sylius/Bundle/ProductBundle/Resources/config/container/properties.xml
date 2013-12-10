@@ -43,9 +43,20 @@
         <service id="sylius.form.type.prototype_configuration" class="%sylius.form.type.prototype_configuration.class%">
             <tag name="form.type" alias="sylius_prototype_configuration" />
         </service>
+
+        <service id="sylius.controller.product_property" class="%sylius.controller.product_property.class%">
+            <argument>sylius</argument>
+            <argument>product_property</argument>
+            <argument>SyliusProductBundle:ProductProperty</argument>
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
         <service id="sylius.form.type.product_property" class="%sylius.form.type.product_property.class%">
             <argument>%sylius.model.product_property.class%</argument>
             <argument>%sylius.validation_group.product_property%</argument>
+            <argument type="service" id="router" />
             <tag name="form.type" alias="sylius_product_property" />
         </service>
     </services>
