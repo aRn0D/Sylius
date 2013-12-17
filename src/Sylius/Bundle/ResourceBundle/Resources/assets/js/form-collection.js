@@ -65,7 +65,7 @@
 
             var prototype = this.$element.data('prototype');
 
-            var prototype = prototype.replace(
+            prototype = prototype.replace(
                 /__name__/g,
                 this.count
             );
@@ -84,10 +84,22 @@
 
             var $element = $(event.currentTarget),
                 url = $element.data('form-url'),
-                id = $element.val(),
-                $container = $element.closest('[data-form-collection="item"]');
+                value = $element.val(),
+                $container = $element.closest('[data-form-collection="item"]'),
+                index = $container.data('form-collection-index');
 
-            $container.load(url, {'id' : id});
+            if (url) {
+                $container.load(url, {'id' : value});
+            } else {
+                var prototype = this.$element.find('[data-form-prototype="'+ value +'"]').val();
+
+                prototype = prototype.replace(
+                    /__name__/g,
+                    index
+                );
+
+                $container.replaceWith(prototype);
+            }
 
             $(document).trigger('collection-form-update', [this.$list.children().first()]);
         },

@@ -79,13 +79,25 @@ class RuleTypeSpec extends ObjectBehavior
     function it_should_define_assigned_data_class($resolver)
     {
         $resolver
+            ->setOptional(array(
+                'rule_type',
+            ))
+            ->shouldBeCalled();
+
+        $resolver
             ->setDefaults(array(
                 'data_class'        => 'Rule',
                 'validation_groups' => array('sylius'),
+                'rule_type'         => 'item_total',
             ))
             ->shouldBeCalled()
         ;
 
         $this->setDefaultOptions($resolver);
+    }
+
+    function it_should_have_name()
+    {
+        $this->getName()->shoudlReturn('sylius_promotion_rule');
     }
 }

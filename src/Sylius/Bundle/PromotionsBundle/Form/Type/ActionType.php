@@ -38,19 +38,27 @@ class ActionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->addEventSubscriber(new BuildActionFormListener($this->actionRegistry, $builder->getFormFactory()))
+            ->addEventSubscriber(new BuildActionFormListener($this->actionRegistry, $builder->getFormFactory(), $options['action_type']))
             ->add('type', 'sylius_promotion_action_choice', array(
-                'label' => 'sylius.form.action.type'
+                'label' => 'sylius.form.action.type',
+                'attr' => array(
+                    'data-form-collection' => 'update'
+                ),
             ))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array(
+            'action_type',
+        ));
+
         $resolver
             ->setDefaults(array(
                 'data_class'        => $this->dataClass,
                 'validation_groups' => $this->validationGroups,
+                'action_type'       => 'fixed_discount',
             ))
         ;
     }

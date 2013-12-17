@@ -38,19 +38,27 @@ class RuleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->addEventSubscriber(new BuildRuleFormListener($this->checkerRegistry, $builder->getFormFactory()))
+            ->addEventSubscriber(new BuildRuleFormListener($this->checkerRegistry, $builder->getFormFactory(), $options['rule_type']))
             ->add('type', 'sylius_promotion_rule_choice', array(
-                'label' => 'sylius.form.rule.type'
+                'label' => 'sylius.form.rule.type',
+                'attr' => array(
+                    'data-form-collection' => 'update',
+                ),
             ))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array(
+            'rule_type',
+        ));
+
         $resolver
             ->setDefaults(array(
                 'data_class'        => $this->dataClass,
                 'validation_groups' => $this->validationGroups,
+                'rule_type'         => 'item_total',
             ))
         ;
     }
