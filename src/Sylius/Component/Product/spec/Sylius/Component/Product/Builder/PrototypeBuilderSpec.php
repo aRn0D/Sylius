@@ -40,14 +40,13 @@ class PrototypeBuilderSpec extends ObjectBehavior
     }
 
     function it_assigns_prototype_attributes_and_options_to_product(
-        $attributeValueRepository,
+        RepositoryInterface $attributeValueRepository,
         PrototypeInterface$prototype,
         ProductInterface $product,
         AttributeInterface $attribute,
         AttributeValueInterface $attributeValue,
         OptionInterface $option
-    )
-    {
+    ) {
         $prototype->getAttributes()->willReturn(array($attribute))->shouldBeCalled();
         $prototype->getOptions()->willReturn(array($option))->shouldBeCalled();
 

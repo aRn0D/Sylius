@@ -33,7 +33,7 @@ class CurrencyConverterSpec extends ObjectBehavior
         $this->shouldImplement('Sylius\Component\Currency\Converter\CurrencyConverterInterface');
     }
 
-    function it_converts_to_any_currency(CurrencyInterface $currency, $currencyRepository)
+    function it_converts_to_any_currency(CurrencyInterface $currency, RepositoryInterface $currencyRepository)
     {
         $currencyRepository->findOneBy(array('code' => 'USD'))->shouldBeCalled()->willReturn($currency);
         $currency->getExchangeRate()->shouldBeCalled()->willReturn(1.30);
@@ -41,7 +41,7 @@ class CurrencyConverterSpec extends ObjectBehavior
         $this->convert(6555, 'USD')->shouldReturn(8522);
     }
 
-    function it_throws_exception_if_currency_is_not_found($currencyRepository)
+    function it_throws_exception_if_currency_is_not_found(RepositoryInterface $currencyRepository)
     {
         $currencyRepository->findOneBy(array('code' => 'EUR'))->shouldBeCalled()->willReturn(null);
 

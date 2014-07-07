@@ -66,14 +66,13 @@ class ShippingChargesProcessorSpec extends ObjectBehavior
     }
 
     function it_applies_calculated_shipping_charge_for_each_shipment_associated_with_the_order(
-        $adjustmentRepository,
-        $calculator,
+        RepositoryInterface $adjustmentRepository,
+        DelegatingCalculatorInterface $calculator,
         AdjustmentInterface $adjustment,
         OrderInterface $order,
         ShipmentInterface $shipment,
         ShippingMethodInterface $shippingMethod
-    )
-    {
+    ) {
         $adjustmentRepository->createNew()->willReturn($adjustment);
         $order->getShipments()->willReturn(array($shipment));
 

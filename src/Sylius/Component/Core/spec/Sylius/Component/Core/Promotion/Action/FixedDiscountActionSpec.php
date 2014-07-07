@@ -38,12 +38,11 @@ class FixedDiscountActionSpec extends ObjectBehavior
     }
 
     function it_applies_fixed_discount_as_promotion_adjustment(
-        $adjustmentRepository,
+        RepositoryInterface $adjustmentRepository,
         OrderInterface $order,
         AdjustmentInterface $adjustment,
         PromotionInterface $promotion
-    )
-    {
+    ) {
         $adjustmentRepository->createNew()->willReturn($adjustment);
         $promotion->getDescription()->willReturn('promotion description');
 

@@ -27,8 +27,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class RestrictedZoneListenerSpec extends ObjectBehavior
 {
-    function let(RestrictedZoneCheckerInterface $restrictedZoneChecker, CartProviderInterface $cartProvider, ObjectManager $cartManager, SessionInterface $session, TranslatorInterface $translator)
-    {
+    function let(
+        RestrictedZoneCheckerInterface $restrictedZoneChecker,
+        CartProviderInterface $cartProvider,
+        ObjectManager $cartManager,
+        SessionInterface $session,
+        TranslatorInterface $translator
+    ) {
         $this->beConstructedWith($restrictedZoneChecker, $cartProvider, $cartManager, $session, $translator);
     }
 
@@ -38,7 +43,7 @@ class RestrictedZoneListenerSpec extends ObjectBehavior
     }
 
     function it_sets_cart_if_event_contains_invalid_data(
-        $cartProvider,
+        CartProviderInterface $cartProvider,
         GenericEvent $event,
         OrderInterface $cart
     )
@@ -54,11 +59,10 @@ class RestrictedZoneListenerSpec extends ObjectBehavior
     }
 
     function it_uses_cart_from_event(
-        $cartProvider,
+        CartProviderInterface $cartProvider,
         GenericEvent $event,
         OrderInterface $cart
-    )
-    {
+    ) {
         $event->getSubject()->willReturn($cart);
 
         $cartProvider->getCart()->shouldNotBeCalled();
@@ -70,15 +74,14 @@ class RestrictedZoneListenerSpec extends ObjectBehavior
     }
 
     function it_validates_every_cart_item(
-        $cartProvider,
-        $restrictedZoneChecker,
+        CartProviderInterface $cartProvider,
+        RestrictedZoneCheckerInterface $restrictedZoneChecker,
         OrderItemInterface $item,
         GenericEvent $event,
         OrderInterface $cart,
         ProductInterface $product,
         AddressInterface $address
-    )
-    {
+    ) {
         $event->getSubject()->willReturn($cart);
 
         $cartProvider->getCart()->shouldNotBeCalled();
@@ -96,19 +99,18 @@ class RestrictedZoneListenerSpec extends ObjectBehavior
     }
 
     function it_removes_invalid_cart_items(
-        $cartProvider,
-        $restrictedZoneChecker,
-        $session,
-        $translator,
-        $cartManager,
+        CartProviderInterface $cartProvider,
+        RestrictedZoneCheckerInterface $restrictedZoneChecker,
+        SessionInterface $session,
+        TranslatorInterface $translator,
+        ObjectManager $cartManager,
         OrderItemInterface $item,
         GenericEvent $event,
         OrderInterface $cart,
         ProductInterface $product,
         AddressInterface $address,
         FlashBag $flashBag
-    )
-    {
+    ) {
         $event->getSubject()->willReturn($cart);
 
         $cartProvider->getCart()->shouldNotBeCalled();

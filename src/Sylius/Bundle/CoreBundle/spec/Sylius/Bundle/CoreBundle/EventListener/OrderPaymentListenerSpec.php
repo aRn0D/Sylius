@@ -12,6 +12,7 @@
 namespace spec\Sylius\Bundle\CoreBundle\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use SM\Factory\FactoryInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use SM\Factory\FactoryInterface;
@@ -73,8 +74,12 @@ class OrderPaymentListenerSpec extends ObjectBehavior
         ;
     }
 
-    function it_updates_payment(GenericEvent $event, OrderInterface $order, ArrayCollection $payments, PaymentInterface $payment)
-    {
+    function it_updates_payment(
+        GenericEvent $event,
+        OrderInterface $order,
+        ArrayCollection $payments,
+        PaymentInterface $payment
+    ) {
         $event->getSubject()->willReturn($order);
 
         $order->hasPayments()->willReturn(true);

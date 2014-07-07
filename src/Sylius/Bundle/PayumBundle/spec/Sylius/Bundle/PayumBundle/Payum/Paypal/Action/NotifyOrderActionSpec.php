@@ -23,7 +23,6 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface as PaymentModelInterface;
 use Sylius\Component\Payment\Model\Payment;
 use Sylius\Component\Payment\PaymentTransitions;
-use Sylius\Component\Payment\SyliusPaymentEvents;
 use Sylius\Component\Resource\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -84,12 +83,11 @@ class NotifyOrderActionSpec extends ObjectBehavior
     }
 
     function it_must_not_dispatch_pre_and_post_payment_state_changed_if_state_not_changed(
-        $factory,
+        FactoryInterface $factory,
         SecuredNotifyRequest $request,
         OrderInterface $order,
         PaymentModelInterface $paymentModel,
         PaymentInterface $payment,
-        EventDispatcherInterface $eventDispatcher,
         StateMachineInterface $sm,
         Collection $payments
     ) {
@@ -116,12 +114,11 @@ class NotifyOrderActionSpec extends ObjectBehavior
     }
 
     function it_must_dispatch_pre_and_post_payment_state_changed_if_state_changed(
-        $factory,
+        FactoryInterface $factory,
         SecuredNotifyRequest $request,
         OrderInterface $order,
         PaymentModelInterface $paymentModel,
         PaymentInterface $payment,
-        EventDispatcherInterface $eventDispatcher,
         ObjectManager $objectManager,
         StateMachineInterface $sm,
         Collection $payments

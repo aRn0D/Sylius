@@ -93,7 +93,7 @@ class PurchaseStepSpec extends ObjectBehavior
     }
 
     function it_must_dispatch_pre_and_post_payment_state_changed_if_state_changed(
-        $factory,
+        FactoryInterface $factory,
         ProcessContextInterface $context,
         PaymentInterface $payment,
         EventDispatcherInterface $eventDispatcher,
@@ -145,7 +145,7 @@ class PurchaseStepSpec extends ObjectBehavior
     }
 
     function it_must_not_dispatch_pre_and_post_payment_state_changed_if_state_not_changed(
-        $factory,
+        FactoryInterface $factory,
         ProcessContextInterface $context,
         PaymentInterface $payment,
         EventDispatcherInterface $eventDispatcher,

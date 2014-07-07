@@ -26,8 +26,7 @@ class VariantUniqueValidatorSpec extends ObjectBehavior
     function let(
         ObjectRepository $variantRepository,
         ExecutionContextInterface $context
-    )
-    {
+    ) {
         $this->beConstructedWith($variantRepository);
         $this->initialize($context);
     }
@@ -43,12 +42,11 @@ class VariantUniqueValidatorSpec extends ObjectBehavior
     }
 
     function it_should_add_violation_if_variant_with_given_property_value_already_exists(
-        $variantRepository,
+        ObjectRepository $variantRepository,
         VariantInterface $variant,
         VariantInterface $conflictualVariant,
-        $context
-    )
-    {
+        ExecutionContextInterface $context
+    ) {
         $constraint = new VariantUnique(array(
             'property' => 'presentation',
             'message'  => 'Variant with given presentation already exists'
@@ -63,11 +61,10 @@ class VariantUniqueValidatorSpec extends ObjectBehavior
     }
 
     function it_should_not_add_violation_if_variant_with_given_property_value_does_not_exist(
-        $variantRepository,
+        ObjectRepository $variantRepository,
         VariantInterface $variant,
-        $context
-    )
-    {
+        ExecutionContextInterface $context
+    ) {
         $constraint = new VariantUnique(array(
             'property' => 'presentation',
             'message'  => 'Variant with given presentation already exists'
@@ -82,11 +79,10 @@ class VariantUniqueValidatorSpec extends ObjectBehavior
     }
 
     function it_should_not_add_violation_if_conflictual_variant_and_validated_one_are_the_same(
-        $variantRepository,
+        ObjectRepository $variantRepository,
         VariantInterface $variant,
-        $context
-    )
-    {
+        ExecutionContextInterface $context
+    ) {
         $constraint = new VariantUnique(array(
             'property' => 'presentation',
             'message'  => 'Variant with given presentation already exists'

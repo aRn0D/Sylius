@@ -37,7 +37,7 @@ class InventoryChangeListenerSpec extends ObjectBehavior
     }
 
     function it_fills_backorders_on_inventory_change(
-        $backordersHandler,
+        BackordersHandlerInterface $backordersHandler,
         GenericEvent $event,
         StockableInterface $stockable)
     {

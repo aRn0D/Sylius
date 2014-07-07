@@ -36,9 +36,8 @@ class ImageUploadListenerSpec extends ObjectBehavior
         ProductVariantInterface $variant,
         ProductInterface $product,
         ImageInterface $image,
-        $uploader
-    )
-    {
+        ImageUploaderInterface $uploader
+    ) {
         $event->getSubject()->willReturn($product);
         $product->getMasterVariant()->willReturn($variant);
         $variant->getImages()->willReturn(array($image));
@@ -51,9 +50,8 @@ class ImageUploadListenerSpec extends ObjectBehavior
     function it_uses_image_uploader_to_upload_taxon_image(
         GenericEvent $event,
         Taxon $taxon,
-        $uploader
-    )
-    {
+        ImageUploaderInterface $uploader
+    ) {
         $event->getSubject()->willReturn($taxon);
         $uploader->upload($taxon)->shouldBeCalled();
         $taxon->hasFile()->willReturn(true);
@@ -63,9 +61,8 @@ class ImageUploadListenerSpec extends ObjectBehavior
 
     function it_throws_exception_if_event_subject_is_not_a_product(
         GenericEvent $event,
-        $uploader
-    )
-    {
+        ImageUploaderInterface $uploader
+    ) {
         $event->getSubject()->willReturn($uploader);
 
         $this

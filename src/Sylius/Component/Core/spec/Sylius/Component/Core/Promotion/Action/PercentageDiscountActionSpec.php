@@ -38,12 +38,11 @@ class PercentageDiscountActionSpec extends ObjectBehavior
     }
 
     function it_applies_percentage_discount_as_promotion_adjustment(
-        $adjustmentRepository,
+        RepositoryInterface $adjustmentRepository,
         OrderInterface $order,
         AdjustmentInterface $adjustment,
         PromotionInterface $promotion
-    )
-    {
+    ) {
         $order->getPromotionSubjectTotal()->willReturn(10000);
         $adjustmentRepository->createNew()->willReturn($adjustment);
         $promotion->getDescription()->willReturn('promotion description');

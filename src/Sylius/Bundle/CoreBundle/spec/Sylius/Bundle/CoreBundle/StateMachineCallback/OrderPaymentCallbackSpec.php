@@ -35,7 +35,7 @@ class OrderPaymentCallbackSpec extends ObjectBehavior
     }
 
     function it_dispatches_event_on_payment_update(
-        $factory,
+        FactoryInterface $factory,
         PaymentInterface $payment,
         OrderInterface $order,
         StateMachineInterface $sm,

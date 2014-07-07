@@ -46,11 +46,10 @@ class RestrictedZoneCheckerSpec extends ObjectBehavior
 
     function it_is_not_restricted_if_user_have_no_shipping_address(
         ProductInterface $product,
-        $securityContext,
+        SecurityContextInterface $securityContext,
         TokenInterface $token,
         UserInterface $user
-    )
-    {
+    ) {
         $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')->shouldBeCalled()->willReturn(true);
         $securityContext->getToken()->shouldBeCalled()->willReturn($token);
         $token->getUser()->shouldBeCalled()->willReturn($user);
@@ -61,13 +60,12 @@ class RestrictedZoneCheckerSpec extends ObjectBehavior
 
     function it_is_not_restricted_if_product_have_no_restricted_zone(
         ProductInterface $product,
-        $securityContext,
+        SecurityContextInterface $securityContext,
         TokenInterface $token,
         UserInterface $user,
         AddressInterface $address,
         ProductInterface $product
-    )
-    {
+    ) {
         $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')->shouldBeCalled()->willReturn(true);
         $securityContext->getToken()->shouldBeCalled()->willReturn($token);
         $token->getUser()->shouldBeCalled()->willReturn($user);
@@ -79,15 +77,14 @@ class RestrictedZoneCheckerSpec extends ObjectBehavior
 
     function it_is_not_restricted_if_zone_matcher_does_not_match_users_shipping_address(
         ProductInterface $product,
-        $securityContext,
-        $zoneMatcher,
+        SecurityContextInterface $securityContext,
+        ZoneMatcherInterface $zoneMatcher,
         TokenInterface $token,
         UserInterface $user,
         AddressInterface $address,
         ProductInterface $product,
         ZoneInterface $zone
-    )
-    {
+    ) {
         $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')->shouldBeCalled()->willReturn(true);
         $securityContext->getToken()->shouldBeCalled()->willReturn($token);
         $token->getUser()->shouldBeCalled()->willReturn($user);
@@ -100,15 +97,14 @@ class RestrictedZoneCheckerSpec extends ObjectBehavior
 
     function it_is_restricted_if_zone_matcher_match_users_shipping_address(
         ProductInterface $product,
-        $securityContext,
-        $zoneMatcher,
+        SecurityContextInterface $securityContext,
+        ZoneMatcherInterface $zoneMatcher,
         TokenInterface $token,
         UserInterface$user,
         AddressInterface $address,
         ProductInterface $product,
         ZoneInterface $zone
-    )
-    {
+    ) {
         $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')->shouldBeCalled()->willReturn(true);
         $securityContext->getToken()->shouldBeCalled()->willReturn($token);
         $token->getUser()->shouldBeCalled()->willReturn($user);

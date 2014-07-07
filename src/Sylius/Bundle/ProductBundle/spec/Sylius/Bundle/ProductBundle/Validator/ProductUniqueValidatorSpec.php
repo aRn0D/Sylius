@@ -40,12 +40,11 @@ class ProductUniqueValidatorSpec extends ObjectBehavior
     }
 
     function it_adds_violation_if_product_with_given_property_value_already_exists(
-        $productRepository,
+        ObjectRepository $productRepository,
         ProductInterface $product,
         ProductInterface $conflictualProduct,
-        $context
-    )
-    {
+        ExecutionContext $context
+    ) {
         $constraint = new ProductUnique(array(
             'property' => 'name',
             'message'  => 'Product with given name already exists.'
@@ -60,11 +59,10 @@ class ProductUniqueValidatorSpec extends ObjectBehavior
     }
 
     function it_does_not_add_violation_if_product_with_given_property_value_does_not_exist(
-        $productRepository,
+        ObjectRepository $productRepository,
         ProductInterface $product,
-        $context
-    )
-    {
+        ExecutionContext $context
+    ) {
         $constraint = new ProductUnique(array(
             'property' => 'name',
             'message'  => 'Product with given name already exists.'
@@ -79,11 +77,10 @@ class ProductUniqueValidatorSpec extends ObjectBehavior
     }
 
     function it_does_not_add_violation_if_conflictual_product_and_validated_one_are_the_same(
-        $productRepository,
+        ObjectRepository $productRepository,
         ProductInterface $product,
-        $context
-    )
-    {
+        ExecutionContext $context
+    ) {
         $constraint = new ProductUnique(array(
             'property' => 'name',
             'message'  => 'Product with given name already exists'

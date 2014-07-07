@@ -39,13 +39,12 @@ class ShipmentFactorySpec extends ObjectBehavior
     }
 
     function it_creates_a_single_shipment_and_assigns_all_inventory_units_to_it(
-        $shipmentRepository,
+        RepositoryInterface $shipmentRepository,
         OrderInterface $order,
         ShipmentInterface $shipment,
         ArrayCollection $shipments,
         InventoryUnitInterface $inventoryUnit
-    )
-    {
+    ) {
 
         $shipmentRepository
             ->createNew()
@@ -88,8 +87,7 @@ class ShipmentFactorySpec extends ObjectBehavior
         ArrayCollection $shipments,
         InventoryUnitInterface $inventoryUnit,
         InventoryUnitInterface $inventoryUnitWithoutShipment
-    )
-    {
+    ) {
         $shipments
             ->first()
             ->willReturn($shipment)

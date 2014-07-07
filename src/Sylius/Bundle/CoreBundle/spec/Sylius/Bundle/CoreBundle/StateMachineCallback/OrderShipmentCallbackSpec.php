@@ -11,14 +11,11 @@
 
 namespace spec\Sylius\Bundle\CoreBundle\StateMachineCallback;
 
-use Doctrine\Common\Collections\Collection;
 use SM\Factory\FactoryInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Order\OrderTransitions;
-use Sylius\Component\Payment\PaymentTransitions;
 use Sylius\Component\Resource\StateMachine\StateMachineInterface;
 use Sylius\Component\Shipping\ShipmentTransitions;
 
@@ -38,7 +35,7 @@ class OrderShipmentCallbackSpec extends ObjectBehavior
     }
 
     function it_updates_order_state(
-        $factory,
+        FactoryInterface $factory,
         ShipmentInterface $shipment,
         OrderInterface $order,
         StateMachineInterface $sm1,
@@ -57,7 +54,7 @@ class OrderShipmentCallbackSpec extends ObjectBehavior
     }
 
     function it_does_not_update_order_state_if_one_shipment_is_not_shipped(
-        $factory,
+        FactoryInterface $factory,
         ShipmentInterface $shipment,
         OrderInterface $order,
         StateMachineInterface $sm1,

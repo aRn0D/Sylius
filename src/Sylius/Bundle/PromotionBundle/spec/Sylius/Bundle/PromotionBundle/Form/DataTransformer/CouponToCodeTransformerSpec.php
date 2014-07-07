@@ -24,8 +24,7 @@ class CouponToCodeTransformerSpec extends ObjectBehavior
     function let(
         ObjectRepository $couponRepository,
         EventDispatcher $dispatcher
-    )
-    {
+    ) {
         $this->beConstructedWith($couponRepository, $dispatcher);
     }
 
@@ -59,7 +58,7 @@ class CouponToCodeTransformerSpec extends ObjectBehavior
         $this->reverseTransform('')->shouldReturn(null);
     }
 
-    function it_should_return_null_if_coupon_not_found_on_reverse_transform($couponRepository)
+    function it_should_return_null_if_coupon_not_found_on_reverse_transform(ObjectRepository $couponRepository)
     {
         $couponRepository
             ->findOneBy(array('code' => 'FREEIPHONE5'))
@@ -71,10 +70,9 @@ class CouponToCodeTransformerSpec extends ObjectBehavior
     }
 
     function it_should_return_coupon_if_found_on_reverse_transform(
-        $couponRepository,
+        ObjectRepository$couponRepository,
         CouponInterface $coupon
-    )
-    {
+    ) {
         $couponRepository
             ->findOneBy(array('code' => 'FREEIPHONE5'))
             ->shouldBeCalled()

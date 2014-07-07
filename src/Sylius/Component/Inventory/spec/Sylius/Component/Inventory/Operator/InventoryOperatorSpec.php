@@ -28,15 +28,14 @@ class InventoryOperatorSpec extends ObjectBehavior
         BackordersHandlerInterface $backordersHandler,
         AvailabilityCheckerInterface $availabilityChecker,
         EventDispatcher $eventDispatcher
-    )
-    {
+    ) {
         $this->beConstructedWith($backordersHandler, $availabilityChecker, $eventDispatcher);
     }
 
     function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Component\Inventory\Operator\InventoryOperator');
-   }
+    }
 
     function it_implements_Sylius_inventory_operator_interface()
     {
@@ -52,13 +51,12 @@ class InventoryOperatorSpec extends ObjectBehavior
     }
 
     function it_decreases_stockable_on_hand_by_count_of_sold_units(
-        $availabilityChecker,
-        $backordersHandler,
+        AvailabilityCheckerInterface $availabilityChecker,
+        BackordersHandlerInterface $backordersHandler,
         StockableInterface $stockable,
         InventoryUnitInterface $inventoryUnit1,
         InventoryUnitInterface $inventoryUnit2
-    )
-    {
+    ) {
         $inventoryUnit1->getStockable()->willReturn($stockable);
         $inventoryUnit2->getStockable()->willReturn($stockable);
 
@@ -75,14 +73,13 @@ class InventoryOperatorSpec extends ObjectBehavior
     }
 
     function it_decreases_stockable_on_hand_and_ignores_backordered_units(
-        $availabilityChecker,
-        $backordersHandler,
+        AvailabilityCheckerInterface $availabilityChecker,
+        BackordersHandlerInterface $backordersHandler,
         StockableInterface $stockable,
         InventoryUnitInterface $inventoryUnit1,
         InventoryUnitInterface $inventoryUnit2,
         InventoryUnitInterface $inventoryUnit3
-    )
-    {
+    ) {
         $inventoryUnit1->getStockable()->willReturn($stockable);
         $inventoryUnit2->getStockable()->willReturn($stockable);
         $inventoryUnit3->getStockable()->willReturn($stockable);

@@ -35,7 +35,7 @@ class CurrencyProviderSpec extends ObjectBehavior
         $this->shouldImplement('Sylius\Component\Currency\Provider\CurrencyProviderInterface');
     }
 
-    function it_returns_all_enabled_currencies(CurrencyInterface $currency, $currencyRepository)
+    function it_returns_all_enabled_currencies(CurrencyInterface $currency, RepositoryInterface $currencyRepository)
     {
         $currencyRepository->findBy(array('enabled' => true))->shouldBeCalled()->willReturn(array($currency));
 

@@ -25,8 +25,7 @@ class PromotionTypeSpec extends ObjectBehavior
     function let(
         ServiceRegistryInterface $checkerRegistry,
         ServiceRegistryInterface $actionRegistry
-    )
-    {
+    ) {
         $this->beConstructedWith('Promotion', array('sylius'), $checkerRegistry, $actionRegistry);
     }
 
@@ -42,8 +41,8 @@ class PromotionTypeSpec extends ObjectBehavior
 
     function it_should_build_form_with_proper_fields(
         FormBuilder $builder,
-        $checkerRegistry,
-        $actionRegistry
+        ServiceRegistryInterface $checkerRegistry,
+        ServiceRegistryInterface $actionRegistry
     )
     {
         $builder

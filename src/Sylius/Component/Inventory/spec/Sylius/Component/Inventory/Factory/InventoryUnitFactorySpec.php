@@ -49,9 +49,8 @@ class InventoryUnitFactorySpec extends ObjectBehavior
         InventoryUnitInterface $inventoryUnit1,
         InventoryUnitInterface $inventoryUnit2,
         InventoryUnitInterface $inventoryUnit3,
-        $repository
-    )
-    {
+        RepositoryInterface $repository
+    ) {
         $repository->createNew()->shouldBeCalled()->willReturn($inventoryUnit1, $inventoryUnit2, $inventoryUnit3);
 
         $inventoryUnit1->setStockable($stockable)->shouldBeCalled();

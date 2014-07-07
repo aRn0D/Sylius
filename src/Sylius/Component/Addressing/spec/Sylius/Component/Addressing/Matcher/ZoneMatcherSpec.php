@@ -42,20 +42,19 @@ class ZoneMatcherSpec extends ObjectBehavior
         $this->shouldImplement('Sylius\Component\Addressing\Matcher\ZoneMatcherInterface');
     }
 
-    function it_returns_null_if_there_are_no_zones($repository, AddressInterface $address)
+    function it_returns_null_if_there_are_no_zones(RepositoryInterface $repository, AddressInterface $address)
     {
         $repository->findAll()->willReturn(array());
         $this->match($address)->shouldReturn(null);
     }
 
     function it_should_match_address_by_province(
-        $repository,
+        RepositoryInterface $repository,
         ProvinceInterface $province,
         AddressInterface $address,
         ZoneMemberProvince $memberProvince,
         ZoneInterface $zone
-    )
-    {
+    ) {
         $repository->findAll()->shouldBeCalled()->willReturn(array($zone));
         $address->getProvince()->shouldBeCalled()->willReturn($province);
         $memberProvince->getProvince()->shouldBeCalled()->willReturn($province);
@@ -67,13 +66,12 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_by_province_and_scope(
-        $repository,
+        RepositoryInterface $repository,
         ProvinceInterface $province,
         AddressInterface $address,
         ZoneMemberProvince $memberProvince,
         ZoneInterface $zone
-    )
-    {
+    ) {
         $repository->findBy(array('scope' => 'shipping'))->shouldBeCalled()->willReturn(array($zone));
         $address->getProvince()->shouldBeCalled()->willReturn($province);
         $memberProvince->getProvince()->shouldBeCalled()->willReturn($province);
@@ -85,12 +83,12 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_by_country(
-        $repository,
+        RepositoryInterface$repository,
         CountryInterface $country,
         AddressInterface $address,
         ZoneMemberCountry $memberCountry,
-        ZoneInterface $zone)
-    {
+        ZoneInterface $zone
+    ) {
         $repository->findAll()->shouldBeCalled()->willReturn(array($zone));
         $address->getCountry()->shouldBeCalled()->willReturn($country);
         $memberCountry->getCountry()->shouldBeCalled()->willReturn($country);
@@ -102,12 +100,12 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_by_country_and_scope(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         AddressInterface $address,
         ZoneMemberCountry $memberCountry,
-        ZoneInterface $zone)
-    {
+        ZoneInterface $zone
+    ) {
         $repository->findBy(array('scope' => 'shipping'))->shouldBeCalled()->willReturn(array($zone));
         $address->getCountry()->shouldBeCalled()->willReturn($country);
         $memberCountry->getCountry()->shouldBeCalled()->willReturn($country);
@@ -119,15 +117,14 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_for_nested_zones(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         AddressInterface $address,
         ZoneMemberCountry $memberCountry,
         ZoneInterface $subZone,
         ZoneMemberZone $memberZone,
         ZoneInterface $rootZone
-    )
-    {
+    ) {
         $address->getCountry()->shouldBeCalled()->willReturn($country);
         $memberCountry->getCountry()->shouldBeCalled()->willReturn($country);
         $subZone->getMembers()->shouldBeCalled()->willReturn(array($memberCountry));
@@ -144,15 +141,14 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_for_nested_zones_and_scope(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         AddressInterface $address,
         ZoneMemberCountry $memberCountry,
         ZoneInterface $subZone,
         ZoneMemberZone $memberZone,
         ZoneInterface $rootZone
-    )
-    {
+    ) {
         $address->getCountry()->shouldBeCalled()->willReturn($country);
         $memberCountry->getCountry()->shouldBeCalled()->willReturn($country);
         $subZone->getMembers()->shouldBeCalled()->willReturn(array($memberCountry));
@@ -169,7 +165,7 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_from_province_when_many_are_found(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         ProvinceInterface $province,
         AddressInterface $address,
@@ -177,8 +173,7 @@ class ZoneMatcherSpec extends ObjectBehavior
         ZoneMemberProvince $memberProvince,
         ZoneInterface $zoneCountry,
         ZoneInterface $zoneProvince
-    )
-    {
+    ) {
         $address->getProvince()->willReturn($province);
         $address->getCountry()->willReturn($country);
         $memberProvince->getProvince()->willReturn($province);
@@ -197,7 +192,7 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_address_from_province_when_many_are_found_by_scope(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         ProvinceInterface $province,
         AddressInterface $address,
@@ -205,8 +200,7 @@ class ZoneMatcherSpec extends ObjectBehavior
         ZoneMemberProvince $memberProvince,
         ZoneInterface $zoneCountry,
         ZoneInterface $zoneProvince
-    )
-    {
+    ) {
         $address->getProvince()->willReturn($province);
         $address->getCountry()->willReturn($country);
         $memberProvince->getProvince()->willReturn($province);
@@ -225,13 +219,12 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_all_zones_when_one_zone_for_address_is_defined(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         AddressInterface $address,
         ZoneMemberCountry $memberCountry,
         ZoneInterface $zoneCountry
-    )
-    {
+    ) {
         $repository->findAll()->shouldBeCalled()->willReturn(array($zoneCountry));
         $address->getCountry()->shouldBeCalled()->willReturn($country);
         $memberCountry->getCountry()->shouldBeCalled()->willReturn($country);
@@ -243,13 +236,12 @@ class ZoneMatcherSpec extends ObjectBehavior
     }
 
     function it_should_match_all_zones_by_scope_when_one_zone_for_address_is_defined(
-        $repository,
+        RepositoryInterface $repository,
         CountryInterface $country,
         AddressInterface $address,
         ZoneMemberCountry $memberCountry,
         ZoneInterface $zoneCountry
-    )
-    {
+    ) {
         $repository->findBy(array('scope' => 'shipping'))->shouldBeCalled()->willReturn(array($zoneCountry));
         $address->getCountry()->shouldBeCalled()->willReturn($country);
         $memberCountry->getCountry()->shouldBeCalled()->willReturn($country);

@@ -35,7 +35,7 @@ class LocaleProviderSpec extends ObjectBehavior
         $this->shouldImplement('Sylius\Component\Locale\Provider\LocaleProviderInterface');
     }
 
-    function it_returns_all_enabled_locales(LocaleInterface $locale, $localeRepository)
+    function it_returns_all_enabled_locales(LocaleInterface $locale, RepositoryInterface $localeRepository)
     {
         $localeRepository->findBy(array('enabled' => true))->shouldBeCalled()->willReturn(array($locale));
 

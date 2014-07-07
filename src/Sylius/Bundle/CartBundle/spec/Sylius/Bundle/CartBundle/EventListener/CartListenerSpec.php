@@ -76,14 +76,13 @@ class CartListenerSpec extends ObjectBehavior
     }
 
     function it_should_not_save_an_invalid_cart(
-        $manager,
-        $provider,
-        $validator,
+        ObjectManager $manager,
+        CartProviderInterface $provider,
+        ValidatorInterface $validator,
         CartEvent $event,
         CartInterface $cart,
         ConstraintViolationListInterface $constraintList
-    )
-    {
+    ) {
         $constraintList->count()->willReturn(1);
         $event->getCart()->willReturn($cart);
         $validator->validate($cart)->shouldBeCalled()->willReturn($constraintList);

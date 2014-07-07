@@ -41,11 +41,10 @@ class ShipmentProcessorSpec extends ObjectBehavior
     }
 
     function it_updates_shipment_states(
-        $factory,
+        FactoryInterface$factory,
         ShipmentInterface $shipment,
         StateMachineInterface $sm
-    )
-    {
+    ) {
         $factory->get($shipment, ShipmentTransitions::GRAPH)->willReturn($sm);
 
         $sm->apply('transition', true)->shouldBeCalled();
@@ -53,8 +52,11 @@ class ShipmentProcessorSpec extends ObjectBehavior
         $this->updateShipmentStates(array($shipment), 'transition');
     }
 
-    function it_updates_item_states($factory, ShipmentItemInterface $item, StateMachineInterface $sm)
-    {
+    function it_updates_item_states(
+        FactoryInterface $factory,
+        ShipmentItemInterface $item,
+        StateMachineInterface $sm
+    ) {
         $factory->get($item, ShipmentItemTransitions::GRAPH)->shouldBeCalled()->willReturn($sm);
 
         $sm->apply('transition', true)->shouldBeCalled();

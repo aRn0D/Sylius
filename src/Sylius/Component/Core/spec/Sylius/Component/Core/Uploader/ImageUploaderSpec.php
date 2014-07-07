@@ -39,7 +39,7 @@ class ImageUploaderSpec extends ObjectBehavior
         $this->shouldImplement('Sylius\Component\Core\Uploader\ImageUploaderInterface');
     }
 
-    function it_uploads_image($filesystem, $image)
+    function it_uploads_image(Filesystem $filesystem, ImageInterface $image)
     {
         $image->hasFile()->willReturn(true);
         $image->getPath()->willReturn('foo.jpg');

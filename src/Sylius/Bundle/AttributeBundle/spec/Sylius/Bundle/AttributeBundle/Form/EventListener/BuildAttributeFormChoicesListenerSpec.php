@@ -37,9 +37,8 @@ class BuildAttributeFormChoicesListenerSpec extends ObjectBehavior
     function it_does_no_not_build_choices_collection_for_null(
         FormEvent $event,
         Form $form,
-        $formFactory
-    )
-    {
+        FormFactoryInterface $formFactory
+    ) {
         $event->getData()->willReturn(null);
         $event->getForm()->willReturn($form);
 
@@ -57,9 +56,8 @@ class BuildAttributeFormChoicesListenerSpec extends ObjectBehavior
         Form $form,
         AttributeInterface $attribute,
         Form $collectionField,
-        $formFactory
-    )
-    {
+        FormFactoryInterface $formFactory
+    ) {
         $event->getData()->willReturn($attribute);
         $event->getForm()->willReturn($form);
 
@@ -85,9 +83,8 @@ class BuildAttributeFormChoicesListenerSpec extends ObjectBehavior
         Form $form,
         AttributeInterface $attribute,
         Form $collectionField,
-        $formFactory
-    )
-    {
+        FormFactoryInterface $formFactory
+    ) {
         $event->getData()->willReturn($attribute);
         $event->getForm()->willReturn($form);
 
@@ -113,9 +110,8 @@ class BuildAttributeFormChoicesListenerSpec extends ObjectBehavior
         Form $form,
         AttributeInterface $attribute,
         Form $collectionField,
-        $formFactory
-    )
-    {
+        FormFactoryInterface $formFactory
+    ) {
         $attribute->getType()->willReturn(AttributeTypes::TEXT);
 
         $event->getData()->willReturn($attribute);

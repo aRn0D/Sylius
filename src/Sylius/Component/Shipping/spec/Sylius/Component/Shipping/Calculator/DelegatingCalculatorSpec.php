@@ -48,12 +48,11 @@ class DelegatingCalculatorSpec extends ObjectBehavior
     }
 
     function it_should_delegate_calculation_to_a_calculator_defined_on_shipping_method(
-        $registry,
+        CalculatorRegistryInterface $registry,
         ShipmentInterface $shipment,
         ShippingMethodInterface $method,
         CalculatorInterface $calculator
-    )
-    {
+    ) {
         $shipment->getMethod()->willReturn($method);
 
         $method->getCalculator()->willReturn('default');

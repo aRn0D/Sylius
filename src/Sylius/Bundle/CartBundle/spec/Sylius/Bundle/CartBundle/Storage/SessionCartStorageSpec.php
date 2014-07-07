@@ -36,14 +36,14 @@ class SessionCartStorageSpec extends ObjectBehavior
         $this->shouldImplement('Sylius\Component\Cart\Storage\CartStorageInterface');
     }
 
-    function it_returns_cart_identifier_via_session($session)
+    function it_returns_cart_identifier_via_session(SessionInterface $session)
     {
         $session->get(SessionCartStorage::KEY)->willReturn(7);
 
         $this->getCurrentCartIdentifier()->shouldReturn(7);
     }
 
-    function it_sets_cart_identifier_via_session($session, CartInterface $cart)
+    function it_sets_cart_identifier_via_session(SessionInterface $session, CartInterface $cart)
     {
         $cart->getIdentifier()->will(function () {
             return 3;
@@ -57,7 +57,7 @@ class SessionCartStorageSpec extends ObjectBehavior
         $this->getCurrentCartIdentifier()->shouldReturn(3);
     }
 
-    function it_removes_the_saved_identifier_from_session_on_reset($session)
+    function it_removes_the_saved_identifier_from_session_on_reset(SessionInterface $session)
     {
         $session->remove(SessionCartStorage::KEY)->shouldBeCalled();
 
