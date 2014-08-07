@@ -73,7 +73,7 @@ class SyliusShippingBundle extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return 'Sylius\Component\Shipping\Model';
     }

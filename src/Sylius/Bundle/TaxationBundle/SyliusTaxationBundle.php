@@ -65,7 +65,7 @@ class SyliusTaxationBundle extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return 'Sylius\Component\Taxation\Model';
     }

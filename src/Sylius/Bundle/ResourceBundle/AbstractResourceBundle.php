@@ -38,13 +38,13 @@ abstract class AbstractResourceBundle extends Bundle implements ResourceBundleIn
             );
         }
 
-        if (null !== $this->getEntityNamespace()) {
+        if (null !== $this->getModelNamespace()) {
             $className = get_class($this);
             foreach ($className::getSupportedDrivers() as $driver) {
                 list($mappingsPassClassName, $manager) = $this->getDoctrineDriver($driver);
 
                 $container->addCompilerPass($mappingsPassClassName::createXmlMappingDriver(
-                    array($this->getConfigFilesPath() => $this->getEntityNamespace()),
+                    array($this->getConfigFilesPath() => $this->getModelNamespace()),
                     $manager,
                     sprintf('%s.driver.%s', $this->getBundlePrefix(), $driver)
                 ));
@@ -70,11 +70,11 @@ abstract class AbstractResourceBundle extends Bundle implements ResourceBundleIn
     }
 
     /**
-     * Return the path to the Entity directory
+     * Return the directory where are stored the doctrine mapping
      *
      * @return string
      */
-    protected function getEntityDirectory()
+    protected function getDoctrineMappingDirectory()
     {
         return 'model';
     }
@@ -85,7 +85,7 @@ abstract class AbstractResourceBundle extends Bundle implements ResourceBundleIn
      *
      * @return string
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return null;
     }
@@ -122,7 +122,7 @@ abstract class AbstractResourceBundle extends Bundle implements ResourceBundleIn
     }
 
     /**
-     * Return the path to the xml directory
+     * Return the absolute path where are stored the doctrine mapping
      *
      * @return string
      */
@@ -131,7 +131,7 @@ abstract class AbstractResourceBundle extends Bundle implements ResourceBundleIn
         return sprintf(
             '%s/Resources/config/doctrine/%s',
             $this->getPath(),
-            strtolower($this->getEntityDirectory())
+            strtolower($this->getDoctrineMappingDirectory())
         );
     }
 }

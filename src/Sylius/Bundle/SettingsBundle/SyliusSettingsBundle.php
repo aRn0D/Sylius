@@ -64,7 +64,7 @@ class SyliusSettingsBundle extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return 'Sylius\Bundle\SettingsBundle\Model';
     }

@@ -47,7 +47,7 @@ class SyliusPayumBundle extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return 'Sylius\Bundle\PayumBundle\Model';
     }

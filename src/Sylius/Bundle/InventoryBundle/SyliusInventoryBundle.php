@@ -58,7 +58,7 @@ class SyliusInventoryBundle extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return 'Sylius\Component\Inventory\Model';
     }

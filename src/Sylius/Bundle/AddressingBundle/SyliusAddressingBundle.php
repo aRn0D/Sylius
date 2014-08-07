@@ -56,7 +56,7 @@ class SyliusAddressingBundle extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getEntityNamespace()
+    protected function getModelNamespace()
     {
         return 'Sylius\Component\Addressing\Model';
     }
