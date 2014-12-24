@@ -29,6 +29,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 abstract class DefaultContext extends RawMinkContext implements Context, KernelAwareContext
 {
     /**
+     * @var string
+     */
+    protected $appName = 'sylius';
+
+    /**
      * Faker.
      *
      * @var Generator
@@ -130,7 +135,7 @@ abstract class DefaultContext extends RawMinkContext implements Context, KernelA
      */
     protected function getRepository($resource)
     {
-        return $this->getService('sylius.repository.'.$resource);
+        return $this->getService($this->appName.'.repository.'.$resource);
     }
 
     /**
@@ -206,7 +211,7 @@ abstract class DefaultContext extends RawMinkContext implements Context, KernelA
     /**
      * Generate page url.
      * This method uses simple convention where page argument is prefixed
-     * with "sylius_" and used as route name passed to router generate method.
+     * with "AppName_" and used as route name passed to router generate method.
      *
      * @param object|string $page
      * @param array         $parameters
@@ -223,11 +228,11 @@ abstract class DefaultContext extends RawMinkContext implements Context, KernelA
         $routes = $this->getContainer()->get('router')->getRouteCollection();
 
         if (null === $routes->get($route)) {
-            $route = 'sylius_'.$route;
+            $route = $this->appName.'_'.$route;
         }
 
         if (null === $routes->get($route)) {
-            $route = str_replace('sylius_', 'sylius_backend_', $route);
+            $route = str_replace($this->appName.'_', $this->appName.'_backend_', $route);
         }
 
         $route = str_replace(array_keys($this->actions), array_values($this->actions), $route);

@@ -220,8 +220,15 @@ class CoreContext extends DefaultContext
         $manager->flush();
     }
 
-    public function thereIsUser($email, $password, $role = null, $enabled = 'yes', $address = null, $groups = array(), $flush = true)
-    {
+    public function thereIsUser(
+        $email,
+        $password,
+        $role = null,
+        $enabled = 'yes',
+        $address = null,
+        array $groups = array(),
+        $flush = true
+    ) {
         if (null === $user = $this->getRepository('user')->findOneBy(array('email' => $email))) {
             $addressData = explode(',', $address);
             $addressData = array_map('trim', $addressData);
@@ -244,13 +251,9 @@ class CoreContext extends DefaultContext
                 $user->addRole($role);
             }
 
-            $this->getEntityManager()->persist($user);
+            $this->userHasGroup($user, $groups);
 
-            foreach ($groups as $groupName) {
-                if ($group = $this->findOneByName('group', $groupName)) {
-                    $user->addGroup($group);
-                }
-            }
+            $this->getEntityManager()->persist($user);
 
             if ($flush) {
                 $this->getEntityManager()->flush();
@@ -258,6 +261,15 @@ class CoreContext extends DefaultContext
         }
 
         return $user;
+    }
+
+    public function userHasGroup(UserInterface $user, array $groups = array())
+    {
+        foreach ($groups as $groupName) {
+            if ($group = $this->findOneByName('group', $groupName)) {
+                $user->addGroup($group);
+            }
+        }
     }
 
     /**

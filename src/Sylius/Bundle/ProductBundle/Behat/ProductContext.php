@@ -14,6 +14,8 @@ namespace Sylius\Bundle\ProductBundle\Behat;
 use Behat\Gherkin\Node\TableNode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Bundle\ResourceBundle\Behat\DefaultContext;
+use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Product\Model\ProductInterface;
 
 class ProductContext extends DefaultContext
 {
@@ -25,74 +27,73 @@ class ProductContext extends DefaultContext
     public function thereAreProducts(TableNode $table)
     {
         $manager = $this->getEntityManager();
-        $repository = $this->getRepository('product');
 
         foreach ($table->getHash() as $data) {
-            $product = $repository->createNew();
-
-            $product->setCurrentLocale($this->getContainer()->getParameter('sylius.locale'));
-            $product->setName(trim($data['name']));
-            $product->setDescription('...');
-            $product->getMasterVariant()->setPrice($data['price'] * 100);
-
-            if (!empty($data['options'])) {
-                foreach (explode(',', $data['options']) as $option) {
-                    $option = $this->findOneByName('product_option', trim($option));
-                    $product->addOption($option);
-                }
-            }
-
-            if (!empty($data['attributes'])) {
-                $attribute = explode(':', $data['attributes']);
-
-                $productAttribute = $this->findOneByName('product_attribute', trim($attribute[0]));
-                $attributeValue =  $this->getRepository('product_attribute_value')->createNew();
-
-                $attributeValue
-                    ->setAttribute($productAttribute)
-                    ->setValue($attribute[1]);
-
-                $product->addAttribute($attributeValue);
-            }
-
-            if (isset($data['sku'])) {
-                $product->setSku($data['sku']);
-            }
-
-            if (isset($data['description'])) {
-                $product->setDescription($data['description']);
-            }
-
-            if (isset($data['quantity'])) {
-                $product->getMasterVariant()->setOnHand($data['quantity']);
-            }
-
-            if (isset($data['variants selection']) && !empty($data['variants selection'])) {
-                $product->setVariantSelectionMethod($data['variants selection']);
-            }
-
-            if (isset($data['tax category'])) {
-                $product->setTaxCategory($this->findOneByName('tax_category', trim($data['tax category'])));
-            }
-
-            if (isset($data['taxons'])) {
-                $taxons = new ArrayCollection();
-
-                foreach (explode(',', $data['taxons']) as $taxonName) {
-                    $taxons->add($this->findOneByName('taxon', trim($taxonName)));
-                }
-
-                $product->setTaxons($taxons);
-            }
-
-            if (isset($data['deleted']) && 'yes' === $data['deleted']) {
-                $product->setDeletedAt(new \DateTime());
-            }
-
-            $manager->persist($product);
+            $this->thereIsProduct($data, false);
         }
 
         $manager->flush();
+    }
+
+    /**
+     * @Given /^there is product:$/
+     */
+    public function thereIsProduct($data, $flush = true)
+    {
+        $productBuilder = $this->getService('sylius.product_builder')
+            ->create(trim($data['name']))
+            ->setCurrentLocale($this->getContainer()->getParameter('sylius.locale'))
+            ->setDescription('...')
+            ->getMasterVariant()->setPrice($data['price'] * 100);
+
+        if (!empty($data['options'])) {
+            foreach (explode(',', $data['options']) as $option) {
+                $option = $this->findOneByName('product_option', trim($option));
+                $productBuilder->addOption($option);
+            }
+        }
+
+        if (!empty($data['attributes'])) {
+            $attribute = explode(':', $data['attributes']);
+
+            $productBuilder->addAttribute($attribute[0], $attribute[1]);
+        }
+
+        if (isset($data['sku'])) {
+            $productBuilder->setSku($data['sku']);
+        }
+
+        if (isset($data['description'])) {
+            $productBuilder->setDescription($data['description']);
+        }
+
+        if (isset($data['quantity'])) {
+            $productBuilder->getMasterVariant()->setOnHand($data['quantity']);
+        }
+
+        if (isset($data['variants selection']) && !empty($data['variants selection'])) {
+            $productBuilder->setVariantSelectionMethod($data['variants selection']);
+        }
+
+        if (isset($data['tax category'])) {
+            $productBuilder->setTaxCategory($this->findOneByName('tax_category', trim($data['tax category'])));
+        }
+
+        if (isset($data['taxons'])) {
+            $taxons = new ArrayCollection();
+
+            foreach (explode(',', $data['taxons']) as $taxonName) {
+                $taxons->add($this->findOneByName('taxon', trim($taxonName)));
+            }
+
+            $productBuilder->setTaxons($taxons);
+        }
+
+        if (isset($data['deleted']) && 'yes' === $data['deleted']) {
+            $productBuilder->setDeletedAt(new \DateTime());
+        }
+
+        return $productBuilder->save($flush);
     }
 
     /**
@@ -218,6 +219,7 @@ class ProductContext extends DefaultContext
 
         foreach ($table->getHash() as $data) {
             $productTranslation = $this->findOneByName('product_translation', $data['product']);
+            /** @var Product $product */
             $product = $productTranslation->getTranslatable();
             $product->setCurrentLocale($data['locale']);
             $product
@@ -231,7 +233,7 @@ class ProductContext extends DefaultContext
     /**
      * @Then :locale translation for product :productName should exist
      */
-    public function translationForProductShouldExist($locale, $productName)
+    public function translationForProductExist($locale, $productName)
     {
         $product = $this->findOneByName('product_translation', $productName);
 
